@@ -47,6 +47,5 @@ public class UserService implements IUserService{
 
     }
 
-    // skal implementere metoder fra IUserService
 
 }
