@@ -15,4 +15,6 @@ public interface ICrudService<T,ID> { // generelt CrudService interface der matc
 
     void delete(T entity);
 
+    boolean existsById(ID id);
+
 }

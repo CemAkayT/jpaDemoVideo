@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
-@RestController // vi arbejder med rest
+@RestController // vi arbejder med Rest
 public class UserController {
 
     private UserService userService; // vi skal instantiere et objekt her vi kan kalde
@@ -17,16 +17,46 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/addUser")
+    @GetMapping("/findAll")
+    public ResponseEntity<Set<User>> getUsers() {
+        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    }
+
+    @PostMapping("/save")
     public ResponseEntity<User> users(@RequestBody User user) {
         userService.save(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-
-    @GetMapping("/getUsers")
-    public ResponseEntity<Set<User>> getUsers() {
-        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    @DeleteMapping("deleteById/{id}")
+    public ResponseEntity<Set<User>> deleteUserById(@PathVariable("id") Long id) {
+        userService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @DeleteMapping("/delete") // bruger den ikke
+    public void deleteUser(@RequestBody User user) {
+        userService.delete(user);
+    }
+
+    @GetMapping("existsById/{id}")
+    public boolean exists(@PathVariable("id") Long id) {
+        return userService.existsById(id);
+    }
+
+   @PutMapping("/update")
+    public ResponseEntity<Set<User>> update(Long id, @RequestBody User user) {
+        userService.findById(id);
+        userService.save(user);
+       return new ResponseEntity<>(HttpStatus.OK);
+   }
+
+   /* @PutMapping("/update/{id}/{newName}/{newAge}")
+    public ResponseEntity<Set<User>> update(@PathVariable("id") Long id, @PathVariable("newName") String newName, @PathVariable("newAge") int newAge, User user) {
+        userService.findById(id);
+        user.setName(newName);
+        user.setAge(newAge);
+        userService.save(user);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }*/
 }
