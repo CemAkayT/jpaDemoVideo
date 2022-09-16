@@ -28,7 +28,7 @@ public class UserController {
         if(userService.save(user)!= null){
             msg = "Oprettet bruger: " + user.getName();
         } else{
-            msg = "Fejl i oprettelsen";
+            msg = "ERROR";
         }
         return new ResponseEntity<>(msg, HttpStatus.OK);
     }
