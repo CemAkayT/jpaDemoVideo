@@ -26,7 +26,7 @@ public class UserController {
     public ResponseEntity<String> users(@RequestBody User user) {
         String msg;
         if(userService.save(user)!= null){
-            msg = "Oprettet bruger: " + user.getName();
+            msg = "USER CREATED: " + user.getName();
         } else{
             msg = "ERROR";
         }
