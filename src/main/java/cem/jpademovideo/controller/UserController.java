@@ -23,10 +23,16 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<User> users(@RequestBody User user) {
-        userService.save(user);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    public ResponseEntity<String> users(@RequestBody User user) {
+        String msg;
+        if(userService.save(user)!= null){
+            msg = "Oprettet bruger: " + user.getName();
+        } else{
+            msg = "Fejl i oprettelsen";
+        }
+        return new ResponseEntity<>(msg, HttpStatus.OK);
     }
+
 
     @DeleteMapping("deleteById/{id}")
     public ResponseEntity<Set<User>> deleteUserById(@PathVariable("id") Long id) {
